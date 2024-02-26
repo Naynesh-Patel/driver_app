@@ -36,7 +36,24 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
        appBar: AppBar(
          automaticallyImplyLeading: false,
          backgroundColor: AppColor.themeColor,
-         title: Text("My Activity",style: AppTextStyle.appbarTextStyle,),
+         title:  Row(
+           mainAxisSize: MainAxisSize.min,
+           children: [
+             InkWell(
+               onTap: (){
+                 Get.to(const Profile());
+               },
+               child: Image.asset(
+                 AssetsPath.icDriverProfile,
+                 width: 28.0,
+               ),
+             ),
+             const SizedBox(
+               width: 10,
+             ),
+             Text("My Activity",style: AppTextStyle.appbarTextStyle,)
+           ],
+         ),
          actions: [
            Obx(() => Transform.scale(
              scale: 0.6,
@@ -48,16 +65,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin{
                },
              ),
            ),),
-
-           InkWell(
-             borderRadius: BorderRadius.circular(10.0),
-               onTap: (){
-                 Get.to(const Profile());
-               },
-               child: Image.asset(AssetsPath.icDriverProfile,height: 28,)),
-           const SizedBox(
-             width: 16.0,
-           ),
          ],
          bottom: _widgetTabBar(),
        ),
