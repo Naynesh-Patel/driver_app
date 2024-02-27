@@ -9,6 +9,7 @@ class AppColor{
   static const Color hintColor=Colors.black26;
   static const Color themeColor=Color(0xff16293a);
   static const Color bg=Color(0xff16293a);
+  static const Color redColor=Colors.red;
   static const Color customButtonColor=Colors.red;
 
 

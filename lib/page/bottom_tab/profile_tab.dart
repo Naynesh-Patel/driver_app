@@ -5,25 +5,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Profile extends StatefulWidget {
-  const Profile({Key? key}) : super(key: key);
+class ProfileTab extends StatefulWidget {
+  const ProfileTab({Key? key}) : super(key: key);
 
   @override
-  State<Profile> createState() => _ProfileState();
+  State<ProfileTab> createState() => _ProfileTabState();
 }
 
-class _ProfileState extends State<Profile> {
+class _ProfileTabState extends State<ProfileTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: AppColor.themeColor,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_outlined,color: Colors.white,),
-          onPressed: () {
-            Get.back();
-        },),
         title: Text("Profile",style: AppTextStyle.appbarTextStyle,),
       ),
       body: _body(),

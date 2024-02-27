@@ -1,12 +1,9 @@
 import 'package:driver_app/constant/app_color.dart';
 import 'package:driver_app/constant/app_text_style.dart';
-import 'package:driver_app/constant/assets_path.dart';
 import 'package:driver_app/controller/home_controller.dart';
-import 'package:driver_app/page/profile.dart';
-import 'package:driver_app/page/tab/complete_tab.dart';
-import 'package:driver_app/page/tab/today_tab.dart';
-import 'package:driver_app/page/tab/upcoming_tab.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:driver_app/page/bottom_tab/experience_tab.dart';
+import 'package:driver_app/page/bottom_tab/home_tab.dart';
+import 'package:driver_app/page/bottom_tab/profile_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,85 +17,55 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with TickerProviderStateMixin{
 
 
-  late TabController tabController;
   HomeController controller = Get.find();
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    tabController = TabController(length: controller.tabBarList.length, vsync: this);
-  }
+  List<Widget> bodyWidgetList = [
+    const HomeTab(),
+    const ExperienceTab(),
+    const ProfileTab(),
+  ];
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: AppBar(
-         automaticallyImplyLeading: false,
-         backgroundColor: AppColor.themeColor,
-         title:  Row(
-           mainAxisSize: MainAxisSize.min,
-           children: [
-             InkWell(
-               onTap: (){
-                 Get.to(const Profile());
-               },
-               child: Image.asset(
-                 AssetsPath.icDriverProfile,
-                 width: 28.0,
-               ),
-             ),
-             const SizedBox(
-               width: 10,
-             ),
-             Text("My Activity",style: AppTextStyle.appbarTextStyle,)
-           ],
-         ),
-         actions: [
-           Obx(() => Transform.scale(
-             scale: 0.6,
-             child: Switch(
-               activeColor: Colors.green,
-               value: controller.isDriverOnline.value,
-               onChanged: (bool value) {
-                 controller.isDriverOnline.value = value;
-               },
-             ),
-           ),),
-         ],
-         bottom: _widgetTabBar(),
-       ),
-      body: _body(),
-    );
-  }
-
-   _widgetTabBar(){
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(50.0),
-      child: TabBar(
-        controller:tabController,
-        labelStyle: AppTextStyle.textStyleRegular14.copyWith(color: Colors.white),
-        unselectedLabelStyle:AppTextStyle.textStyleRegular14.copyWith(color: Colors.white),
-        indicatorColor: Colors.red,
-        tabs: List.generate(controller.tabBarList.length, (index){
-          return Tab(
-            child: Text(controller.tabBarList[index]),
-          );
-        })
-      ),
+        body : _body(),
+       bottomNavigationBar: _bottomBar(),
     );
   }
 
   _body(){
-    return TabBarView(
-      controller: tabController,
-        children:const  [
-          TodayTab(),
-          UpcomingTab(),
-          CompleteTab(),
-        ]
-    );
+    return Obx(() => bodyWidgetList.elementAt(controller.position.value));
   }
+
+  _bottomBar(){
+    return Obx(()=>BottomNavigationBar(
+      unselectedItemColor: AppColor.themeColor,
+      selectedItemColor: Colors.red,
+      selectedLabelStyle: AppTextStyle.textStyleRegular12,
+      unselectedLabelStyle:AppTextStyle.textStyleRegular12,
+      // unselectedLabelStyle: TextStyle(letterSpacing:0.5),
+      currentIndex: controller.position.value,
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home,color:controller.position.value == 0 ?AppColor.redColor:AppColor.themeColor,),
+          label: "Home",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.language_outlined ,color:controller.position.value == 1 ?AppColor.redColor:AppColor.themeColor,),
+          label: "Experience",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person_rounded,color:controller.position.value == 2 ?AppColor.redColor:AppColor.themeColor,),
+          label: "Profile",
+        ),
+      ],
+      onTap: (val){
+        controller.position.value = val;
+      },
+    ),);
+  }
+
 
 
 

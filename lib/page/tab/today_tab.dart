@@ -39,8 +39,14 @@ class _TodayTabState extends State<TodayTab> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _boldKeyValue(key: "Time",value: "08:00 PM"),
+                        const Icon(Icons.map,color: Colors.red,)
+                      ],
+                    ),
                     _keyValue(key: "Guest Name",value: controller.todayRideGuestList[index]),
-                    _keyValue(key: "Time",value: "08:00 PM"),
                     _keyValue(key: "No Of Person",value: "6"),
                     const Divider(),
                     _widgetPickUpDropUp(),
@@ -104,7 +110,7 @@ class _TodayTabState extends State<TodayTab> {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Expanded(child: _pageButton(color: Colors.blue.shade300,buttonText: "Chat",onTap: (){
+        Expanded(child: _pageButton(color: Colors.blue.shade300,buttonText: "Message",onTap: (){
           Get.to(const Chat());
         })),
         const SizedBox(
@@ -115,7 +121,7 @@ class _TodayTabState extends State<TodayTab> {
     );
   }
 
-  Widget _pageButton({required Color color,required String buttonText,Function()? onTap}){
+   Widget _pageButton({required Color color,required String buttonText,Function()? onTap}){
     return Material(
       color: color,
       borderRadius: BorderRadius.circular(4),
@@ -133,7 +139,6 @@ class _TodayTabState extends State<TodayTab> {
     );
   }
 
-
   _keyValue({key,value}){
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -141,6 +146,17 @@ class _TodayTabState extends State<TodayTab> {
       children: [
         Text("$key : ",style: AppTextStyle.textStyleRegular14,),
         Flexible(child: Text("$value",style: AppTextStyle.textStyleRegular14,)),
+      ],
+    );
+  }
+
+  _boldKeyValue({key,value}){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text("$key : ",style: AppTextStyle.textStyleBold14,),
+        Flexible(child: Text("$value",style: AppTextStyle.textStyleBold14,)),
       ],
     );
   }

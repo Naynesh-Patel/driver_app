@@ -38,9 +38,9 @@ class _CompleteTabState extends State<CompleteTab> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      _boldKeyValue(key: "Date",value: "27-FEB-2024"),
+                      _boldKeyValue(key: "Time",value: "12:00 PM"),
                       _keyValue(key: "Guest Name",value: controller.completeRideGuestList[index]),
-                      _keyValue(key: "Date",value: "27-FEB-2024"),
-                      _keyValue(key: "Time",value: "12:00 PM"),
                       _keyValue(key: "No Of Person",value: "4"),
                       const Divider(),
                       _widgetPickUpDropUp(),
@@ -140,6 +140,18 @@ class _CompleteTabState extends State<CompleteTab> {
         Text("$key : ",style: AppTextStyle.textStyleRegular14,),
         Flexible(
             child: Text("$value",/*textAlign: TextAlign.end,*/style: AppTextStyle.textStyleRegular14,)),
+      ],
+    );
+  }
+
+
+  _boldKeyValue({key,value}){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text("$key : ",style: AppTextStyle.textStyleBold14,),
+        Flexible(child: Text("$value",style: AppTextStyle.textStyleBold14,)),
       ],
     );
   }
